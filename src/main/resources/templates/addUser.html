@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <title>Add User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>
+</head>
+<body>
+<h1>Add User</h1>
+<div class="col-md-5">
+    <form th:object="${user}" th:action="@{save}" action="#" method="post">
+        <div>
+            <label th:text="'Full name'" th:for="fullName"></label>
+            <input type="text" th:field="*{fullName}" class="form-control"/>
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="Username" th:for="username"></label>
+            <input type="text" th:field="*{username}" class="form-control"/>
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="Password" th:for="password"></label>
+            <input type="text" th:field="*{password}" class="form-control"/>
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <input class="btn btn-success" type="submit" value="Save"/>
+    </form>
+</div>
+</body>
+</html>

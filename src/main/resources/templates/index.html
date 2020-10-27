@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <title>User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container col-6">
+    <h1>User Management</h1>
+    <table class="table table-active">
+        <tr>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.fullName}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.password}"></td>
+            <td>
+                <a th:href="@{/edit?id={id}(id=${user.id})}">Edit</a>
+                <span> | </span>
+                <a th:href="@{/delete?id={id}(id=${user.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a class="btn btn-success" href="/add">Add new</a>
+
+    <!--<div>-->
+        <!--<h3>Tim kiem bang username</h3>-->
+        <!--<form>-->
+            <!--<input type="text" th:field="*{username}"/>-->
+            <!--<a href="@{/search?username={username}}">Tim kiem</a>-->
+        <!--</form>-->
+    <!--</div>-->
+</div>
+</body>
+</html>
