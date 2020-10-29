@@ -4,7 +4,11 @@ import com.huyngoduc.demoproject.model.User;
 import com.huyngoduc.demoproject.repository.UserRepository;
 import com.huyngoduc.demoproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +40,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> search(String username) {
-        return userRepository.findAllByUsername(username);
+    public List<User> findPaginated(int pageNo, int pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<User> pagedResult = userRepository.findAll(paging);
+
+        return pagedResult.toList();
+    }
+
+    public Page<User> findAll(PageRequest pr){
+        return userRepository.findAll(pr);
+    }
+
+    @Override
+    public List<User> search(String name) {
+        return userRepository.findAllByLastNameContainsOrFirstNameContains(name);
     }
 }

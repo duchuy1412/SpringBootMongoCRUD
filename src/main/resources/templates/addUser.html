@@ -8,11 +8,19 @@
 <body>
 <h1>Add User</h1>
 <div class="col-md-5">
-    <form th:object="${user}" th:action="@{save}" action="#" method="post">
+    <form th:object="${user}" th:action="@{save}" action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" />
         <div>
-            <label th:text="'Full name'" th:for="fullName"></label>
-            <input type="text" th:field="*{fullName}" class="form-control"/>
+            <label th:text="'First name'" th:for="firstName"></label>
+            <input type="text" th:field="*{firstName}" class="form-control"/>
         </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="'Last name'" th:for="lastName"></label>
+            <input type="text" th:field="*{lastName}" class="form-control"/>
+        </div>
+
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
             <label th:text="Username" th:for="username"></label>
@@ -22,6 +30,28 @@
         <div>
             <label th:text="Password" th:for="password"></label>
             <input type="text" th:field="*{password}" class="form-control"/>
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="Email" th:for="email"></label>
+            <input type="email" th:field="*{email}" class="form-control"/>
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="Phone" th:for="phone"></label>
+            <input type="phone" th:field="*{phone}" class="form-control"/>
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="Birthday" th:for="birthday"></label>
+            <input type="date" th:field="*{birthday}" class="form-control"/>
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+            <label th:text="Description" th:for="description"></label>
+            <textarea th:field="*{description}" class="form-control"/>
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <input class="btn btn-success" type="submit" value="Save"/>
