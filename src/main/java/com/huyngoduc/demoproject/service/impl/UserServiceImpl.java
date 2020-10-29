@@ -20,11 +20,6 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public void saveUser(User user) {
         userRepository.save(user);
     }
@@ -35,25 +30,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserById(String id) {
-        return userRepository.findById(id);
+    public Page<User> findUserByName(Pageable pr, String name) {
+        return userRepository.findAllByLastNameContaining(pr, name);
     }
 
-    @Override
-    public List<User> findPaginated(int pageNo, int pageSize) {
-
-        Pageable paging = PageRequest.of(pageNo, pageSize);
-        Page<User> pagedResult = userRepository.findAll(paging);
-
-        return pagedResult.toList();
-    }
-
-    public Page<User> findAll(PageRequest pr){
+    public Page<User> findAll(PageRequest pr) {
         return userRepository.findAll(pr);
     }
 
     @Override
-    public List<User> search(String name) {
-        return userRepository.findAllByLastNameContainsOrFirstNameContains(name);
+    public Optional<User> findUserById(String id) {
+        return userRepository.findById(id);
     }
+
 }

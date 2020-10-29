@@ -6,6 +6,7 @@ import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +24,29 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/")
-    public String index(Model model) {
-//        List<User> users = userService.getAllUser();
-//
-//        model.addAttribute("users", users);
-//
-        return "redirect:/1/10";
+    public String index(@RequestParam(defaultValue = "1") int pageNo,
+                        @RequestParam(defaultValue = "10") int pageSize, @RequestParam(value = "search", required = false) String q, Model model) {
+        Page<User> users = userService.findAll(PageRequest.of(pageNo - 1, pageSize));
+        model.addAttribute("users", users);
+
+//        if (q != null) {
+//            //search
+//            Page<User> searchUsers = userService.findUserByName(PageRequest.of(pageNo - 1, 50), q);
+//            model.addAttribute("users", searchUsers);
+//        }
+
+        return "index";
+    }
+
+    @RequestMapping("search")
+    public String search(@RequestParam(defaultValue = "1") int pageNo,
+                         @RequestParam(defaultValue = "10") int pageSize, @RequestParam(value = "q", required = false) String q, Model model) {
+
+        Page<User> searchUsers = userService.findUserByName(PageRequest.of(pageNo - 1, pageSize), q);
+        model.addAttribute("users", searchUsers);
+        model.addAttribute("query", q);
+
+        return "search";
     }
 
 
@@ -64,22 +82,13 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/{pageNo}/{pageSize}")
-    public String getPaginatedUser(@PathVariable int pageNo,
-                                   @PathVariable int pageSize, Model model) {
-        Page<User> users = userService.findAll(PageRequest.of(pageNo - 1, pageSize));
-
-        model.addAttribute("users", users);
-
-        return "index";
-    }
-
-    @RequestMapping("/search")
-    public String search(@RequestParam String name, Model model) {
-        List<User> users = userService.search(name);
-        model.addAttribute("users", users);
-        model.addAttribute("keyword", name);
-
-        return "index";
-    }
+//    @GetMapping("/{pageNo}/{pageSize}")
+//    public String getPaginatedUser(@PathVariable int pageNo,
+//                                   @PathVariable int pageSize, Model model) {
+//        Page<User> users = userService.findAll(PageRequest.of(pageNo - 1, pageSize));
+//
+//        model.addAttribute("users", users);
+//
+//        return "index";
+//    }
 }

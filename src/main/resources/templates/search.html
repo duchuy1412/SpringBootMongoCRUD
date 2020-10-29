@@ -9,16 +9,10 @@
 <div class="container col-6">
     <h1><a href="/">User Management</a></h1>
     <div>
-        <form class="form-inline my-2 my-lg-0" th:object="${q}" th:action="@{search}" action="#" method="post">
+        <form class="form-inline my-2 my-lg-0" th:action="@{search}" th:object="${q}" action="#" method="post">
             <input class="form-control mr-sm-2" type="search" th:name="q" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-    </div>
-
-    <div style="clear: both; display: block; height: 10px"></div>
-
-    <div>
-        <a class="btn btn-success" href="/add">Add new</a>
     </div>
 
     <div style="clear: both; display: block; height: 10px"></div>
@@ -51,7 +45,7 @@
         <nav aria-label="Pagination" th:if="${users.totalPages gt 0}">
             <ul class="pagination">
                 <li class="page-item" th:classappend="${users.number eq 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/?pageNo={pageNo}(pageNo=${users.number lt 2 ? 1 : users.number})}"
+                    <a class="page-link" th:href="@{/search?pageNo={pageNo}(pageNo=${users.number lt 2 ? 1 : users.number})}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
@@ -59,12 +53,12 @@
                 </li>
                 <li class="page-item" th:classappend="${i eq users.number} ? 'active'"
                     th:each="i : ${#numbers.sequence( users.number, users.totalPages > 10 + users.number ? users.number + 10 : users.totalPages, 1)}">
-                    <a class="page-link" th:href="@{/?pageNo={pageNo}(pageNo=${i+1})}" th:text="${i+1}"
+                    <a class="page-link" th:href="@{/search?q={q}&pageNo={pageNo}(q=${query},pageNo=${i+1})}" th:text="${i+1}"
                        th:title="${'Page '+ i}"
                        rel="tooltip"></a></li>
                 <li class="page-item" th:classappend="${users.number + 1 eq users.totalPages} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/?pageNo={pageNo}(pageNo=${users.number + 2})}"
+                       th:href="@{/search?pageNo={pageNo}(pageNo=${users.number + 2})}"
                        aria-label="Next" title="Next Page" data-toggle="tooltip">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
@@ -74,14 +68,6 @@
 
     </div>
 
-
-    <!--<div>-->
-    <!--<h3>Tim kiem bang username</h3>-->
-    <!--<form>-->
-    <!--<input type="text" th:field="*{username}"/>-->
-    <!--<a href="@{/search?username={username}}">Tim kiem</a>-->
-    <!--</form>-->
-    <!--</div>-->
 </div>
 </body>
 </html>
