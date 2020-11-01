@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <title>Profile User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>
+</head>
+<body>
+<h1><a href="/">User Management</a></h1>
+<div class="col-md-5">
+    <div class="form-group">
+        <img th:alt="${image} ?: 'NO_IMAGE'" th:src="'data:image/png;base64,'+${image}"/>
+    </div>
+
+    <div style="clear: both; display: block; height: 10px"></div>
+    <table class="table table-active">
+    <tbody>
+    <tr>
+        <td>First name: </td>
+        <td th:text="${user.firstName}"></td>
+    </tr>
+    <tr>
+        <td>Last name: </td>
+        <td th:text="${user.lastName}"></td>
+    </tr>
+    <tr>
+        <td>Username: </td>
+        <td th:text="${user.username}"></td>
+    </tr>
+    <tr>
+        <td>Email: </td>
+        <td th:text="${user.email}"></td>
+    </tr>
+    <tr>
+        <td>Phone: </td>
+        <td th:text="${user.phone}"></td>
+    </tr>
+    <tr>
+        <td>Birthday: </td>
+        <td th:text="${user.birthday}"></td>
+    </tr>
+    <tr>
+        <td>Description: </td>
+        <td th:text="${user.description}"></td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+</body>
+</html>

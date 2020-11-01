@@ -56,6 +56,19 @@ public class UserController {
         return "addUser";
     }
 
+    @GetMapping(value = "/profile")
+    public String profileUser(@RequestParam("id") String userId, Model model) {
+        Optional<User> optionalUser = userService.findUserById(userId);
+        if (optionalUser.isPresent()) {
+            model.addAttribute("user", optionalUser.get());
+            if (optionalUser.get().getAvatar() != null) {
+                model.addAttribute("image",
+                        Base64.getEncoder().encodeToString(optionalUser.get().getAvatar().getData()));
+            }
+        }
+        return "profileUser";
+    }
+
     @GetMapping(value = "/edit")
     public String editUser(@RequestParam("id") String userId, Model model) {
         Optional<User> userEdit = userService.findUserById(userId);
